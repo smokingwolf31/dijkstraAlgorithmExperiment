@@ -1,29 +1,26 @@
-# binary search program makefile
-# Hussein Suleman
-# 27 March 2017
 
-JAVAC=/usr/bin/javac
-JAVA=/usr/bin/java
+JFLAG = -g
+COMPILE = javac
+SRCDIR = src
+BINDIR = bin
+DOCDIR = doc
+
 .SUFFIXES: .java .class
-SRCDIR=src
-BINDIR=bin
+.java.class:
+	$(COMPILE) $(JFLAG) -cp $(BINDIR) $*.java -d $(BINDIR)
 
-$(BINDIR)/%.class: $(SRCDIR)/%.java
-	$(JAVAC) -d $(BINDIR)/ -cp $(BINDIR) $<
+CLASSES = $(SRCDIR)/*.java
 
-CLASSES2=GraphException.class Vertex.class Edge.class
+default: classes
 
-
-CLASSES=$(CLASSES2:%.class=$(BINDIR)/%.class)
-
-
-default: $(CLASSES)
-
-run: $(CLASSES)
-	$(JAVA) -Xmx1g -cp $(BINDIR) toktik
-
-docs:
-	javadoc -d doc/ src/*.java
+classes:
+	$(COMPILE) $(JFLAG) -cp $(BINDIR) $(CLASSES) -d $(BINDIR)
 
 clean:
-	rm $(BINDIR)/*.class
+	$(RM) $(BINDIR)/*.class
+
+run:
+	java -cp $(BINDIR) Graph
+
+javadoc:
+	javadoc -d $(DOCDIR) $(SRCDIR)/*.java

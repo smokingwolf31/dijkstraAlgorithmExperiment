@@ -327,7 +327,7 @@ public class Graph
         Graph g = new Graph( );
         try
         {   	
-            FileReader fin = new FileReader(args[0]);
+            FileReader fin = new FileReader("Graph1.txt");
             Scanner graphFile = new Scanner( fin );
 
             // Read the edges and insert

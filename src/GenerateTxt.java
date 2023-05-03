@@ -27,7 +27,7 @@ public class GenerateTxt
         nodeNames = new ArrayList<>();
         nodePairs = new ArrayList<>();
         
-        // First create and then write to the file
+        //  First create and then write to the file
         try {
             String fileName = "data//Graph"+ vNum+ "-"+eNum+".txt";
             File file = new File(fileName);

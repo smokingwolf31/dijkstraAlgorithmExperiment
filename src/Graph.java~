@@ -114,9 +114,9 @@ public class Graph
      * Single-source weighted shortest-path algorithm. (Dijkstra) 
      * using priority queues based on the binary heap
      */
-    public void dijkstra( String startName )
+    public String dijkstra( String startName )
     {   
-        oppcount_v = 0;
+        oppcount = 0;
         PriorityQueue<Path> pq = new PriorityQueue<Path>( );
 
         Vertex start = vertexMap.get( startName );
@@ -155,7 +155,6 @@ public class Graph
                     pq.add( new Path( w, w.dist ) );
                 }
             }
-        
         }
     }
 
@@ -173,8 +172,9 @@ public class Graph
         {
             String startName = "NodeXX1";
             String destName = "NodeXX2";
-            g.dijkstra( startName );
+            results = g.dijkstra( startName );
             g.printPath( destName );
+            System.out.println(results);
         }
         catch( NoSuchElementException e )
           { return false; }

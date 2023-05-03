@@ -1,20 +1,21 @@
+# binary search program makefile
 
-JFLAG = -g
-COMPILE = javac
-SRCDIR = src
-BINDIR = bin
+JFLAGS = -g
+JC = javac
+SRCDIR= src
+BINDIR= bin
 DOCDIR = doc
 
 .SUFFIXES: .java .class
 .java.class:
-	$(COMPILE) $(JFLAG) -cp $(BINDIR) $*.java -d $(BINDIR)
+	$(JC) $(JFLAGS) -cp $(BINDIR) $*.java -d $(BINDIR)
 
 CLASSES = $(SRCDIR)/*.java
 
 default: classes
 
 classes:
-	$(COMPILE) $(JFLAG) -cp $(BINDIR) $(CLASSES) -d $(BINDIR)
+	$(JC) $(JFLAGS) -cp $(BINDIR) $(CLASSES) -d $(BINDIR)
 
 clean:
 	$(RM) $(BINDIR)/*.class

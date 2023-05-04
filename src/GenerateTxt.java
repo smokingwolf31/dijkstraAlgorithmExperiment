@@ -17,7 +17,7 @@ public class GenerateTxt{
     private static ArrayList<String> nodeNames, nodePairs;
     
     /**
-    * This method is used to generate the text file withe the graph inside.
+    * This method is used to generate the text file with the graph inside.
     * @param vNum pass in the number of node you what the graph to have.
     * @param eNum pass in the number of edges you what the graph to have.
     */

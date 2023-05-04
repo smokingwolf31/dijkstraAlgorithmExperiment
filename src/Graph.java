@@ -18,32 +18,38 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 
-// Graph class: evaluate shortest paths.
-//
-// CONSTRUCTION: with no parameters.
-//
-// ******************PUBLIC OPERATIONS**********************
-// void addEdge( String v, String w, double cvw )
-//                              --> Add additional edge
-// void printPath( String w )   --> Print path after alg is run
-// void unweighted( String s )  --> Single-source unweighted
-// void dijkstra( String s )    --> Single-source weighted
-// void negative( String s )    --> Single-source negative weighted
-// void acyclic( String s )     --> Single-source acyclic
-// ******************ERRORS*********************************
-// Some error checking is performed to make sure graph is ok,
-// and to make sure graph satisfies properties needed by each
-// algorithm.  Exceptions are thrown if errors are detected.
-
+/**Graph class: evaluate shortest paths.
+*
+* CONSTRUCTION: with no parameters.
+*
+* ******************PUBLIC OPERATIONS**********************
+* void addEdge( String v, String w, double cvw )
+*                              --> Add additional edge
+* void printPath( String w )   --> Print path after alg is run
+* void unweighted( String s )  --> Single-source unweighted
+* void dijkstra( String s )    --> Single-source weighted
+* void negative( String s )    --> Single-source negative weighted
+* void acyclic( String s )     --> Single-source acyclic
+* ******************ERRORS*********************************
+* Some error checking is performed to make sure graph is ok,
+* and to make sure graph satisfies properties needed by each
+* algorithm.  Exceptions are thrown if errors are detected.
+*/
 public class Graph
-{
+{   
+    /**
+     * Used to represents unprocessed nodes
+     */
     public static final double INFINITY = Double.MAX_VALUE;
     private Map<String,Vertex> vertexMap = new HashMap<String,Vertex>( );
     private static int oppcount_v = 0;
     private static StringBuilder resultData = new StringBuilder("");//will be used to append all the results from each graph 
 
     /**
-     * Add a new edge to the graph.
+     * Add edge to a graph
+     * @param sourceName pass in the souce name
+     * @param destName pass in the destination node name
+     * @param cost pass in the cost
      */
     public void addEdge( String sourceName, String destName, double cost )
     {
@@ -56,6 +62,7 @@ public class Graph
      * Driver routine to handle unreachables and print total cost.
      * It calls recursive routine to print shortest path to
      * destNode after a shortest path algorithm has run.
+     * @param destName pass in the destination node
      */
     public void printPath( String destName )
     {
@@ -75,6 +82,7 @@ public class Graph
     /**
      * If vertexName is not present, add it to vertexMap.
      * In either case, return the Vertex.
+     * @param vertexName pass in the vertex name
      */
     private Vertex getVertex( String vertexName )
     {
@@ -91,6 +99,7 @@ public class Graph
      * Recursive routine to print shortest path to dest
      * after running shortest path algorithm. The path
      * is known to exist.
+     * @param dest pass in the destination vertex
      */
     private void printPath( Vertex dest )
     {
@@ -115,6 +124,7 @@ public class Graph
     /**
      * Single-source weighted shortest-path algorithm. (Dijkstra) 
      * using priority queues based on the binary heap
+     * @param startName pass in the start node name
      */
     public void dijkstra( String startName )
     {   
@@ -168,6 +178,9 @@ public class Graph
 
     /**
      * Process a request; return false if end of file.
+     * @param in pass in the scanner to read the file
+     * @param g pass in the graph to process
+     * @return boolean value true after the processReqest is done
      */
     public static boolean processRequest( Scanner in, Graph g )
     {   
@@ -188,13 +201,15 @@ public class Graph
     }
 
     /**
-     * A main routine that:
+     *  * A main routine that:
      * 1. Reads a file containing edges (supplied as a command-line parameter);
      * 2. Forms the graph;
      * 3. Repeatedly prompts for two vertices and
      *    runs the shortest path algorithm.
      * The data file is a sequence of lines of the format
      *    source destination cost
+     * 
+     * @param args unused
      */
     public static void main( String [ ] args )
     {	

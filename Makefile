@@ -1,5 +1,3 @@
-# binary search program makefile
-
 JFLAGS = -g
 JC = javac
 SRCDIR= src
@@ -24,5 +22,5 @@ clean:
 run:
 	java -cp $(BINDIR) Graph
 
-javadoc:
+docs:
 	javadoc -d $(DOCDIR) $(SRCDIR)/*.java

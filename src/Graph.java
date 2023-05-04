@@ -6,6 +6,7 @@
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collection;
+import java.io.FileWriter;
 import java.util.List;
 import java.util.Queue;
 import java.util.Map;
@@ -38,7 +39,8 @@ public class Graph
 {
     public static final double INFINITY = Double.MAX_VALUE;
     private Map<String,Vertex> vertexMap = new HashMap<String,Vertex>( );
-    private int oppcount_v = 0;
+    private static int oppcount_v = 0;
+    private static StringBuilder resultData = new StringBuilder("");//will be used to append all the results from each graph 
 
     /**
      * Add a new edge to the graph.
@@ -157,6 +159,7 @@ public class Graph
             }
         
         }
+        System.out.println("Number of operations ="+oppcount_v);
     }
 
     
@@ -175,6 +178,7 @@ public class Graph
             String destName = "NodeXX2";
             g.dijkstra( startName );
             g.printPath( destName );
+            System.out.println("With "+oppcount_v+" operations");
         }
         catch( NoSuchElementException e )
           { return false; }
@@ -194,16 +198,18 @@ public class Graph
      */
     public static void main( String [ ] args )
     {	
-        Integer[] vNums = new Integer[]{10, 20};
-        Integer[] eNums = new Integer[]{20, 35};
+        Integer[] vNums = new Integer[]{10, 20, 30, 40, 50};
+        Integer[] eNums = new Integer[]{20, 35, 50, 65, 80};
         GenerateTxt generateTxt = new GenerateTxt();
         Graph g = new Graph( );
         
         for(int vNum : vNums){
             for(int eNum : eNums){
-            
+                
+                System.out.println("The following results is for all the different graphs with "+vNum+"nodes.");
                 try {   
-                    generateTxt.generateTxtFile(vNum, eNum); 
+                    generateTxt.generateTxtFile(vNum, eNum);
+                    System.out.println("Problem not in creating"); 
                     FileReader fin = new FileReader("data//Graph"+vNum+"-"+eNum+".txt");
                     Scanner graphFile = new Scanner( fin );
 
@@ -236,7 +242,19 @@ public class Graph
 
                 Scanner in = new Scanner( System.in );
                 processRequest( in, g );
+                resultData.append(vNum+ " "+eNum+ " "+oppcount_v+"\n");
             }
-        }   
+        }
+        try{
+            FileWriter writer = new FileWriter("data//resultData.txt");
+            System.out.println("The resultts are\n"+resultData.toString());
+            writer.write(resultData.toString());
+            writer.close();
+        }
+        catch (IOException ee){
+            System.err.println(ee);
+        
+        }
+        System.out.println("If you want a second look at the data you just created look at the data folder and look for resultData.txt");   
     }
 }

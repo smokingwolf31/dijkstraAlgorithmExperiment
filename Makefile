@@ -5,6 +5,7 @@ JC = javac
 SRCDIR= src
 BINDIR= bin
 DOCDIR = doc
+DATADIR = data
 
 .SUFFIXES: .java .class
 .java.class:

@@ -34,6 +34,7 @@ public class GenerateTxt
             file.createNewFile();
             FileWriter writer = new FileWriter(fileName);
             writer.write(getGraph(vNum, eNum));
+            writer.close();
         }
         catch (IOException e) {
             System.out.println("An error occured while creating the file");
@@ -60,15 +61,17 @@ public class GenerateTxt
             while(true){
                 String firstNode = nodeNames.get(random.nextInt(vNum-1));
                 String secondNode = nodeNames.get(random.nextInt(vNum-1));
-                if(alreadyPaired(firstNode, secondNode) | firstNode.equals(secondNode))
+                String pair = pairUp(firstNode, secondNode);
+                if( pair.equals("-1")){
+                    System.out.println("Already Paired");
                     continue;
+                }
                 else{
-                    String pair = firstNode+" "+secondNode;
                     nodePairs.add(pair);
                     
                     // Since this string is going to be a file, the hasNextLine() method of the 
                     // Scanner might be affected if the last line has a "nextLine" or ends with "\n"
-                    if(pairNum == eNum-1)
+                    if(pairNum != eNum-1)
                         result.append(pair+" "+random.nextInt(21)+"\n");
                     else 
                         result.append(pair+" "+random.nextInt(21));
@@ -81,8 +84,21 @@ public class GenerateTxt
         return result.toString();
     }
     
-    private boolean alreadyPaired(String firstNode, String secondNode) {
-        return nodePairs.contains(firstNode +" "+ secondNode) | nodePairs.contains(secondNode +" "+ firstNode);
+    /**
+    *
+    *
+    */
+    private String pairUp(String firstNode, String secondNode) {
+        String result = "-1";
+        if(firstNode.equals(secondNode)){
+        }
+        else if(!nodePairs.contains(firstNode+ " "+ secondNode)){
+            result = firstNode+ " "+secondNode;
+        }
+        else if(!nodePairs.contains(secondNode+ " "+firstNode)){
+            result = secondNode+" "+firstNode;
+        }
+        return result;
     }
     
     private String intToNode(int nodeNum) {

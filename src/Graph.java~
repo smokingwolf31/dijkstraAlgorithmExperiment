@@ -6,6 +6,7 @@
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collection;
+import java.io.FileWriter;
 import java.util.List;
 import java.util.Queue;
 import java.util.Map;
@@ -38,7 +39,8 @@ public class Graph
 {
     public static final double INFINITY = Double.MAX_VALUE;
     private Map<String,Vertex> vertexMap = new HashMap<String,Vertex>( );
-    private int oppcount_v = 0;
+    private static int oppcount_v = 0;
+    private static StringBuilder resultData = new StringBuilder("");//will be used to append all the results from each graph 
 
     /**
      * Add a new edge to the graph.
@@ -114,9 +116,9 @@ public class Graph
      * Single-source weighted shortest-path algorithm. (Dijkstra) 
      * using priority queues based on the binary heap
      */
-    public String dijkstra( String startName )
+    public void dijkstra( String startName )
     {   
-        oppcount = 0;
+        oppcount_v = 0;
         PriorityQueue<Path> pq = new PriorityQueue<Path>( );
 
         Vertex start = vertexMap.get( startName );
@@ -155,7 +157,9 @@ public class Graph
                     pq.add( new Path( w, w.dist ) );
                 }
             }
+        
         }
+        System.out.println("Number of operations ="+oppcount_v);
     }
 
     
@@ -172,9 +176,9 @@ public class Graph
         {
             String startName = "NodeXX1";
             String destName = "NodeXX2";
-            results = g.dijkstra( startName );
+            g.dijkstra( startName );
             g.printPath( destName );
-            System.out.println(results);
+            System.out.println("With "+oppcount_v+" operations");
         }
         catch( NoSuchElementException e )
           { return false; }
@@ -194,16 +198,18 @@ public class Graph
      */
     public static void main( String [ ] args )
     {	
-        Integer[] vNums = new Integer[]{10, 20};
-        Integer[] eNums = new Integer[]{20, 35};
+        Integer[] vNums = new Integer[]{10, 20, 30};
+        Integer[] eNums = new Integer[]{20, 35, 50};
         GenerateTxt generateTxt = new GenerateTxt();
         Graph g = new Graph( );
         
         for(int vNum : vNums){
             for(int eNum : eNums){
-            
+                
+                System.out.println("The following results is for all the different graphs with "+vNum+"nodes.");
                 try {   
-                    generateTxt.generateTxtFile(vNum, eNum); 
+                    generateTxt.generateTxtFile(vNum, eNum);
+                    System.out.println("Problem not in creating"); 
                     FileReader fin = new FileReader("data//Graph"+vNum+"-"+eNum+".txt");
                     Scanner graphFile = new Scanner( fin );
 
@@ -236,7 +242,19 @@ public class Graph
 
                 Scanner in = new Scanner( System.in );
                 processRequest( in, g );
+                resultData.append(vNum+ " "+eNum+ " "+oppcount_v+"\n");
             }
-        }   
+        }
+        try{
+            FileWriter writer = new FileWriter("data//resultData.txt");
+            System.out.println("The resultts are\n"+resultData.toString());
+            writer.write(resultData.toString());
+            writer.close();
+        }
+        catch (IOException ee){
+            System.err.println(ee);
+        
+        }
+        System.out.println("If you want a second look at the data you just created look at the data folder and look for resultData.txt");   
     }
 }

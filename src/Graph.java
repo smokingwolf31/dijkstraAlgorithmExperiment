@@ -198,19 +198,22 @@ public class Graph
      */
     public static void main( String [ ] args )
     {	
-        Integer[] vNums = new Integer[]{10, 20, 30, 40, 50};
-        Integer[] eNums = new Integer[]{20, 35, 50, 65, 80};
+        Integer[][] vNums = new Integer[][] {{15,30,45,60,70}, {20, 35, 50, 65,80,100,120,150},{20, 35, 50, 65,80,100,120, 150}
+                                            ,{20, 35, 50, 65,80,100,120,150}, {20, 35, 50, 65,80,100,120,150}};
         GenerateTxt generateTxt = new GenerateTxt();
         Graph g = new Graph( );
         
-        for(int vNum : vNums){
-            for(int eNum : eNums){
+        for(int vNumIndex=0 ; vNumIndex<vNums.length; vNumIndex++){
+
+            int vNum = Integer.parseInt((int)(vNumIndex+1)+"0"); // we first add to the index then cast is as an 
+            System.out.print(vNum);
+            System.out.println("\nThe following results is for all the different graphs with "+vNum+ " nodes.");
+            for(int eNum : vNums[vNumIndex]){
                 
-                System.out.println("The following results is for all the different graphs with "+vNum+"nodes.");
+                
                 try {   
                     generateTxt.generateTxtFile(vNum, eNum);
-                    System.out.println("Problem not in creating"); 
-                    FileReader fin = new FileReader("data//Graph"+vNum+"-"+eNum+".txt");
+                    FileReader fin = new FileReader("data//Graph" +vNum+ "-"+eNum +".txt"); // result = "data//Graph10-15"
                     Scanner graphFile = new Scanner( fin );
 
                     // Read the edges and insert
@@ -247,7 +250,7 @@ public class Graph
         }
         try{
             FileWriter writer = new FileWriter("data//resultData.txt");
-            System.out.println("The resultts are\n"+resultData.toString());
+            System.out.println("\nThe results are\nNodeNumber EdgeNumber NumOfOperations\n"+resultData.toString());
             writer.write(resultData.toString());
             writer.close();
         }
@@ -255,6 +258,6 @@ public class Graph
             System.err.println(ee);
         
         }
-        System.out.println("If you want a second look at the data you just created look at the data folder and look for resultData.txt");   
+        System.out.println("If you want a second look at the data you just created look at the data folder and look for resultData.txt");  
     }
 }

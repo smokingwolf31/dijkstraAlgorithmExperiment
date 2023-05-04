@@ -10,8 +10,7 @@ import java.lang.StringBuilder;
 * 02 May 2023
 * @author Nkabinde Mnqobi
 */
-public class GenerateTxt
-{
+public class GenerateTxt{
     /**
     * The nodeNames list is used to add all the names of the vertixes.
     */
@@ -58,13 +57,16 @@ public class GenerateTxt
         // Make and add pairs
         for (int pairNum = 0; pairNum<eNum; pairNum++){
             Random random = new Random();
+            int cost = random.nextInt(21);
             while(true){
                 String firstNode = nodeNames.get(random.nextInt(vNum-1));
                 String secondNode = nodeNames.get(random.nextInt(vNum-1));
                 String pair = pairUp(firstNode, secondNode);
-                if( pair.equals("-1")){
-                    System.out.println("Already Paired");
+                if( pair.equals("-1"))
                     continue;
+                else if( pair.equals("0")){
+                    pair = firstNode+" "+firstNode;
+                    cost = 0;
                 }
                 else{
                     nodePairs.add(pair);
@@ -72,9 +74,9 @@ public class GenerateTxt
                     // Since this string is going to be a file, the hasNextLine() method of the 
                     // Scanner might be affected if the last line has a "nextLine" or ends with "\n"
                     if(pairNum != eNum-1)
-                        result.append(pair+" "+random.nextInt(21)+"\n");
+                        result.append(pair+" "+cost+"\n");
                     else 
-                        result.append(pair+" "+random.nextInt(21));
+                        result.append(pair+" "+cost);
                     break;
                 }
                 
@@ -85,12 +87,15 @@ public class GenerateTxt
     }
     
     /**
-    *
-    *
+    * Used to pair up two node. Can also detetect if that pair aldready exists or the nodes are the same.
+    * @param firstNode pass in the first node to add.
+    * @param secondNode pass in the secong node to add.
+    * @return String represenation of the node pair up. "-1" is the pair was not created succesfully and 0 if there is a self connection
     */
     private String pairUp(String firstNode, String secondNode) {
         String result = "-1";
-        if(firstNode.equals(secondNode)){
+        if(firstNode.equals(secondNode) & !nodePairs.contains(firstNode+ " " +firstNode)){ // referes to self connected node
+            result = "0";
         }
         else if(!nodePairs.contains(firstNode+ " "+ secondNode)){
             result = firstNode+ " "+secondNode;
@@ -101,6 +106,11 @@ public class GenerateTxt
         return result;
     }
     
+    /**
+     * Given any integer the method convects it to a string represenstaion of a node.
+     * @param nodeNum pass in the integer of the node
+     * @return String of the node creted in the form NodeXXX
+     */
     private String intToNode(int nodeNum) {
         String result;
         if (nodeNum < 10) {

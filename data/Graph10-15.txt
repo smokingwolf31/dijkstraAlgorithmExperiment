@@ -1,0 +1,15 @@
+NodeXX5 NodeXX2 11
+NodeXX6 NodeXX2 18
+NodeXX9 NodeXX5 12
+NodeXX8 NodeXX6 7
+NodeXX1 NodeXX5 11
+NodeXX4 NodeXX8 16
+NodeXX3 NodeXX1 16
+NodeXX4 NodeXX9 7
+NodeXX8 NodeXX2 16
+NodeXX5 NodeXX1 15
+NodeXX8 NodeXX4 0
+NodeXX4 NodeXX3 15
+NodeXX9 NodeXX1 6
+NodeXX7 NodeXX4 12
+NodeXX9 NodeXX4 15

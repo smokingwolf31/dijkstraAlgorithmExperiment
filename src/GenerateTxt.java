@@ -110,7 +110,7 @@ public class GenerateTxt{
      * Given any integer the method convects it to a string represenstaion of a node.
      * @param nodeNum pass in the integer of the node     
      * @return String of the node creted in the form NodeXXX
-     */  
+     */      
     public String intToNode(int nodeNum) {
         String result;
         if (nodeNum < 10) {

@@ -111,7 +111,7 @@ public class GenerateTxt{
      * @param nodeNum pass in the integer of the node
      * @return String of the node creted in the form NodeXXX
      */
-    private String intToNode(int nodeNum) {
+    public String intToNode(int nodeNum) {
         String result;
         if (nodeNum < 10) {
             result = "NodeXX"+nodeNum;

@@ -121,7 +121,7 @@ public class GenerateTxt{
         }  
         else {
             result = "Node"+nodeNum;
-        }
+        }   
         return result;
     }
 }

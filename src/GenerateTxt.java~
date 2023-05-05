@@ -118,7 +118,7 @@ public class GenerateTxt{
         }
         else if (nodeNum < 100) {
             result = "NodeX"+nodeNum;
-        }
+        }  
         else {
             result = "Node"+nodeNum;
         }

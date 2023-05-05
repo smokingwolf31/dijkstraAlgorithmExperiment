@@ -128,6 +128,7 @@ public class Graph
     public int dijkstra( String startName )
     {   
         int oppcount_v = 0;
+        System.out.println(oppcount_v);
         PriorityQueue<Path> pq = new PriorityQueue<Path>( );
 
         Vertex start = vertexMap.get( startName );
@@ -140,7 +141,9 @@ public class Graph
         int nodesSeen = 0;
         while( !pq.isEmpty( ) && nodesSeen < vertexMap.size( ) )
         {   
-            oppcount_v += (int)(Math.log(pq.size())/Math.log(2)); 
+            System.out.println(pq.size()+" Before ="+oppcount_v);
+            oppcount_v ++;
+            System.out.println("After ="+oppcount_v);
             Path vrec = pq.remove( );
             Vertex v = vrec.dest;
             if( v.scratch != 0 )  // already processed v
@@ -164,12 +167,11 @@ public class Graph
                     w.dist = v.dist +cvw;
                     w.prev = v;
                     pq.add( new Path( w, w.dist ) );
-                    oppcount_v += (int)(Math.log(pq.size())/Math.log(2));
+                    oppcount_v ++;
                 }
             }
         
         }
-        return oppcount_v;
     }
 
     
@@ -182,14 +184,16 @@ public class Graph
      * @param g pass in the graph to process
      * @return boolean value true after the processReqest is done
      */
-    public static int processRequest(Graph g ,String startName)
+    public static int processRequest( Scanner in, Graph g )
     {   
         int oppcount_v = 0;
         String results="";
         try
         {
+            String startName = "NodeXX1";
             String destName = "NodeXX2";
             oppcount_v = g.dijkstra( startName );
+            g.printPath( destName );
         }
         catch( NoSuchElementException e )
           { return 0; }
@@ -211,16 +215,18 @@ public class Graph
      */
     public static void main( String [ ] args )
     {	
-        Integer[][] vNums = new Integer[][] {{15,30,45,60,70}, {20, 35, 50, 65,80,100,120,140},{20, 35, 50, 65,80,100,120,140}
-                                            ,{20, 35, 50, 65,80,100,120,140}, {20, 35, 50, 65,80,100,120,140}, {20, 35, 50, 65,80,100,120,140}};
+        Integer[][] vNums = new Integer[][] {{15,30,45,60,70,10,20,10}, {20, 35, 50, 65,80,100},{20, 35, 50, 65,80,100}
+                                            ,{20, 35, 50, 65,80,100}, {20, 35, 50, 65,80,100,20,30}};
         GenerateTxt generateTxt = new GenerateTxt();
+        int oppcount_v = 0;
         for(int vNumIndex=0 ; vNumIndex<vNums.length; vNumIndex++){
+            Graph g = new Graph();
             int vNum = Integer.parseInt((int)(vNumIndex+1)+"0"); // we first add to the index then cast is as an 
-            System.out.println("\nThe following results is for all the different graphs with "+vNum+ " nodes. Note Some Graphs Might Be Disconnected. ");
+            System.out.print(vNum);
+            System.out.println("\nThe following results is for all the different graphs with "+vNum+ " nodes.");
             for(int eNum : vNums[vNumIndex]){
-            
-                System.out.println("\nNew Graph -----------------------------------------");
-                Graph g = new Graph();
+                
+                
                 try {   
                     generateTxt.generateTxtFile(vNum, eNum);
                     FileReader fin = new FileReader("data//Graph" +vNum+ "-"+eNum +".txt"); // result = "data//Graph10-15"
@@ -252,15 +258,10 @@ public class Graph
 
                 System.out.println( "File read..." );
                 System.out.println( g.vertexMap.size( ) + " vertices" );
-                int opperationSum = 0;
-                for (int index =1 ; index<vNum ; index++){
-                    String currentStartNode = generateTxt.intToNode(index);
-                    opperationSum += processRequest(g ,currentStartNode);
-                }
-                int oppcount_v = Math.round(opperationSum/vNum);
+
+                Scanner in = new Scanner( System.in );
+                oppcount_v = processRequest( in, g );
                 resultData.append(vNum+ " "+eNum+ " "+oppcount_v+"\n");
-                
-            
             }
         }
         try{
@@ -273,6 +274,6 @@ public class Graph
             System.err.println(ee);
         
         }
-        System.out.println("\n Thank You For Running Our Experiment.\nIf you want a second look at the data you just created look at the data folder and look for resultData.txt");  
+        System.out.println("If you want a second look at the data you just created look at the data folder and look for resultData.txt");  
     }
 }
